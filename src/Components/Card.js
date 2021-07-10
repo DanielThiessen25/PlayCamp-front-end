@@ -1,7 +1,31 @@
 import styled from 'styled-components';
-import { IoAddCircleOutline, IoCartOutline} from "react-icons/io5";
+import { IoAddCircleOutline, IoCartOutline, IoRemoveCircleOutline} from "react-icons/io5";
+import { useState, useContext, useEffect } from 'react';
 
 export default function Card(props){
+    const [isCarted, setIsCarted] = useState(false);
+    const [orders, setOrders] = useState(1);
+    function clickCart(){
+            setIsCarted(!isCarted);
+    }
+
+    function renderCartButton(){
+        if(isCarted){
+            return(
+            <button onClick={clickCart}><RemoveCart><IoRemoveCircleOutline color="#000000" size="1.2em" /><IoCartOutline color="#000000 " size="1.8em" /></RemoveCart></button>
+            );
+        }
+        else{
+            return(
+                <button onClick={clickCart}><AddCart><IoAddCircleOutline color="#FFFFFF" size="1.2em" /><IoCartOutline color="#FFFFFF" size="1.8em" /></AddCart></button>
+            );
+        }
+    }
+    function minusQtd(){
+        if(orders > 1){
+            setOrders(orders - 1);
+        }
+    }
 
     return(
         <Box>
@@ -21,8 +45,14 @@ export default function Card(props){
             <HorizontalLowDiv>
                 <Price>R$ 49,90</Price>
                 <HorizontalDiv>
-                <Buy>Comprar</Buy>
-                <AddCart><IoAddCircleOutline color="#000000" size="1.2em" /><IoCartOutline color="#000000 " size="1.8em" /></AddCart>
+                <button><Buy>Comprar</Buy></button>
+                <Qtd>
+                    <button onClick={minusQtd}><h2>-</h2></button>
+                    <h1>{orders}</h1>
+                    <button onClick={()=>setOrders(orders + 1)}><h3>+</h3></button>
+                </Qtd>
+
+                {renderCartButton()}
                 </HorizontalDiv> 
             </HorizontalLowDiv>
         </Box>
@@ -131,7 +161,6 @@ const Buy = styled.div`
     font-size: 14px;
     color: white;
     border-radius: 5px;
-    margin-right: 20px;
 
 `;
 
@@ -139,8 +168,48 @@ const AddCart = styled.div`
     width: 60px;
     height: 30px;
     border-radius:5px;
-    background: darkgrey;
+    background: #3C3C3C;
     display: flex;
     justify-content: center;
     align-items: center;
+`;
+
+const RemoveCart = styled.div`
+    width: 60px;
+    height: 30px;
+    border-radius:5px;
+    background: #D6D6D6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+const Qtd = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Raleway', sans-serif;
+    
+    
+    h1{
+        font-size: 20px;
+        font-weight: normal;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    h2{
+        font-size: 25px;
+        font-weight: bolder;
+        color:red;
+        margin-left: 10px;
+    }
+    h3{
+        font-size: 25px;
+        font-weight: bolder;
+        color:green;
+        margin-right: 10px;
+    }
+
 `;
