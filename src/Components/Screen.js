@@ -5,7 +5,7 @@ const Screen = styled.div`
     width:100%;
     height: 100%;
     background: #3D3D3D;
-    padding: 25px;
+    padding: 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
