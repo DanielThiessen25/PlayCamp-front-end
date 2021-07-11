@@ -1,9 +1,13 @@
 import styled from 'styled-components';
 import { useState, useContext} from 'react';
 import Screen from "./Screen";
-import { Link, Redirect } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import InputArea from "./InputArea";
 import { FaPlay } from "react-icons/fa";
+<<<<<<< HEAD
+=======
+import Loader from 'react-loader-spinner';
+>>>>>>> main
 import axios from 'axios';
 
 
@@ -14,6 +18,7 @@ export default function SignUp() {
     const [ name, setName] = useState('');
     const [isClient, setIsClient] = useState(false);
     const [isDev, setIsDev] = useState(false);
+<<<<<<< HEAD
     const [check, setCheck] = useState(false);
 
     function doSignUp(event){
@@ -43,6 +48,47 @@ export default function SignUp() {
         setName("");
         setIsClient(false);
         setIsDev(false);
+=======
+    const [loading, setLoading] = useState(false);
+    const history = useHistory();
+
+    function doSignUp(e){
+        e.preventDefault()
+        if(loading){
+            return;
+        }
+        setLoading(true);
+        if(password !== passwordConfirm){
+            alert("As senhas digitadas devem ser iguais!");
+            setLoading(false);
+            return;
+        }
+        const body = {
+            name: String(name).trim(),
+            email: String(email).trim(),
+            password: String(password).trim(),
+            userType: isDev ? "developer" : "normal"
+        }
+        const url = "http://localhost:4000/signup";
+        const requestSignUp = axios.post(url, body);
+        requestSignUp.then(response => {
+            setEmail("");
+            setPassword("");
+            setPasswordConfirm("");
+            setName("");
+            setLoading(false);
+            alert("Usuário cadastrado com sucesso!");
+            history.push("/");
+        });
+        requestSignUp.catch(err => {
+            setEmail("");
+            setPassword("");
+            setPasswordConfirm("");
+            setName("");
+            setLoading(false);
+            alert("Infelizmente nãoconseguimos te cadastrar,tente novamente.");
+        })
+>>>>>>> main
     }
 
     function loadUser(object) {
@@ -89,17 +135,21 @@ export default function SignUp() {
             <InputArea>
             <FaPlay color="#FFFFFF" size="4em"></FaPlay>
                 <Logo>PlayCamp</Logo>
-                <form onSubmit={doSignUp}>
-                <input placeholder="Nome" required type="text" value={name} onChange={e => setName(e.target.value)}/>
-                <input placeholder="E-mail" required type="e-mail" value={email} onChange={e => setEmail(e.target.value)}/>
-                <input placeholder="Senha" required type="password" value={password} onChange={e => setPassword(e.target.value)}/>
-                <input placeholder="Confirme a senha..." required type="password" value={passwordConfirm} onChange={e => setPasswordConfirm(e.target.value)}/>
+                <form onSubmit={event => doSignUp(event)}>
+                <input placeholder="Nome" required type="text" value={name} onChange={e => setName(e.target.value)} disabled={loading}/>
+                <input placeholder="E-mail" required type="e-mail" value={email} onChange={e => setEmail(e.target.value)} disabled={loading}/>
+                <input placeholder="Senha" required type="password" value={password} onChange={e => setPassword(e.target.value)} disabled={loading}/>
+                <input placeholder="Confirme a senha..." required type="password" value={passwordConfirm} onChange={e => setPasswordConfirm(e.target.value)} disabled={loading}/>
                 <TypeAccount>
                     {renderClient()} 
                     {renderDev()}
                 
                 </TypeAccount> 
-                <button type="submit">Cadastrar</button>
+                <button type="submit" disabled={loading}>
+                    {loading ? 
+                    <Loader type="ThreeDots" color="#FFFFFF" height={13} width={80} />
+                    : "Cadastrar"}
+                </button>
                 </form>
                 <Link to="/" style={{ textDecoration: 'none' }}><LinkText>Mais perdido ainda?? Tente um login mágico!</LinkText></Link>
                 {render()}
