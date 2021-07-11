@@ -23,7 +23,7 @@ export default function Login() {
     return (
         <Screen>
             <InputArea>
-            <FaPlay color="#FFFFFF" size="5em"></FaPlay>
+            <FaPlay color="#FFFFFF" size="4em"></FaPlay>
                 <Logo>PlayCamp</Logo>
                 <form onSubmit={doLogin}>
                     <input placeholder="E-mail" required type="e-mail" value={email} onChange={e => setEmail(e.target.value)} />
