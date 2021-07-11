@@ -1,30 +1,65 @@
 import Screen from "./Screen";
 import styled from 'styled-components';
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import { IoExitOutline, IoCartOutline} from "react-icons/io5";
 import Card from "./Card";
+import { useContext, useState } from "react";
+import UserContext from "../contexts/UserContext";
+import axios from "axios";
 
 export default function Games() {
-return(
-    <Screen>
-    <Heading>
-        {"Welcome, Fulano"}
-        <Toolbar>
-        <Link to="/cart" style={{ textDecoration: 'none'}}> <IoCartOutline color="#FFFFFF" size="1.9em" /> </Link>
-        <Link to="/" style={{ textDecoration: 'none' }}><IoExitOutline color="#FFFFFF" size="1.9em" /></Link>
-        </Toolbar>
-        
-    </Heading>
+    const history = useHistory();
+    const {user, setUser} = useContext(UserContext);
+    if(!user.token){
+        history.push("/");
+        return "";
+    }
+    const isDev = user.userType === "developer" ? true : false;
+    console.log(isDev)
 
-    <CardsList>
-    <Card></Card>
-    <Card></Card>
-    <Card></Card>
-    <Card></Card>
-    <Card></Card>
-    </CardsList>
-    
-</Screen>
+    function doLogout(){
+        const config = {
+            headers:{
+                "authorization": `Bearer ${user.token}`
+            }
+        }
+        const body = {}
+        const url = "http://localhost:4000/logout"
+        const requestLogout = axios.post(url,body, config);
+        requestLogout.then(response => {
+            setUser({});
+            history.push("/");
+        });
+        requestLogout.catch(err => {
+            alert("Ops, tivemos algum erro.");
+            setUser({});
+            history.push("/");
+        })
+    }
+    return(
+        <Screen>
+        <Heading>
+            {"Welcome, " + user.name}
+            <Toolbar>
+            <Link to="/cart" style={{ textDecoration: 'none'}}> <IoCartOutline color="#FFFFFF" size="1.9em" /> </Link>
+            <IoExitOutline color="#FFFFFF" size="1.9em" 
+            onClick={doLogout}/>
+            </Toolbar>
+        </Heading>
+        {isDev ?
+        <DevAddGame>
+            <Link to="/addgame">Dev, Adicionar Jogo</Link>
+        </DevAddGame> : ''}
+
+        <CardsList isDev={isDev}>
+        <Card></Card>
+        <Card></Card>
+        <Card></Card>
+        <Card></Card>
+        <Card></Card>
+        </CardsList>
+        
+    </Screen>
 );
 
 }
@@ -65,12 +100,34 @@ height: 85%;
 width: 100%;
 padding: 15px;
 position: fixed;
-top:65px;
+top: ${props => props.isDev ? '134px':'65px'};
 overflow: hidden;
 overflow-y: scroll;
 display: flex;
 flex-direction: column;
 align-items: center;
+`;
 
+const DevAddGame = styled.div`
+    display: flex;
+    width: 100%;
+    justify-content: right;
+    position: fixed;
+    top: 85px;
+    padding-right: 15px;
+    a{
+        color: #FFFFFF;
+        font-weight: bold;
+        text-decoration: none;
+        background: #000000;
+        height: 45px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        padding-left :8px;
+        padding-right: 8px;
+        margin-bottom: 5px;
+    }
 `;
 

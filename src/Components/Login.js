@@ -35,7 +35,8 @@ export default function Login() {
             setUser({
                 token: response.data.token,
                 name: response.data.userName,
-                userType: response.data.userType
+                userType: response.data.userType,
+                userId: response.data.id
             });
             history.push("/games");
         });
