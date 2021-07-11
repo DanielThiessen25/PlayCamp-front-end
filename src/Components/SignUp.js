@@ -1,13 +1,10 @@
 import styled from 'styled-components';
 import { useState, useContext} from 'react';
 import Screen from "./Screen";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, Redirect } from "react-router-dom";
 import InputArea from "./InputArea";
 import { FaPlay } from "react-icons/fa";
-<<<<<<< HEAD
-=======
 import Loader from 'react-loader-spinner';
->>>>>>> main
 import axios from 'axios';
 
 
@@ -18,37 +15,6 @@ export default function SignUp() {
     const [ name, setName] = useState('');
     const [isClient, setIsClient] = useState(false);
     const [isDev, setIsDev] = useState(false);
-<<<<<<< HEAD
-    const [check, setCheck] = useState(false);
-
-    function doSignUp(event){
-        if(passwordConfirm != password){
-            alert("Senhas diferentes!");
-            setPassword('');
-            setPasswordConfirm('');
-        }
-        else{
-            event.preventDefault();
-            const body = {
-                name: name,
-                email: email,
-                password: password
-            }
-            const request = axios.post("http://localhost:4000/sign-up", body);
-            request.then(loadUser);
-            request.catch(tratarErro);
-    }
-}
-
-    function tratarErro(erro){
-        alert("Dados Incorretos!");
-        setEmail("");
-        setPassword("");
-        setPasswordConfirm('');
-        setName("");
-        setIsClient(false);
-        setIsDev(false);
-=======
     const [loading, setLoading] = useState(false);
     const history = useHistory();
 
@@ -88,18 +54,8 @@ export default function SignUp() {
             setLoading(false);
             alert("Infelizmente nãoconseguimos te cadastrar,tente novamente.");
         })
->>>>>>> main
     }
 
-    function loadUser(object) {
-        setCheck(true);
-    }
-
-    function render(){
-        if(check === true){
-            return (<Redirect to={"/"} />);
-        }
-    }
         
 
     function renderClient(){
@@ -152,7 +108,6 @@ export default function SignUp() {
                 </button>
                 </form>
                 <Link to="/" style={{ textDecoration: 'none' }}><LinkText>Mais perdido ainda?? Tente um login mágico!</LinkText></Link>
-                {render()}
             </InputArea>
         </Screen>
     );
