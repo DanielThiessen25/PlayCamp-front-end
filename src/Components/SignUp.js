@@ -4,6 +4,7 @@ import Screen from "./Screen";
 import { Link, Redirect } from "react-router-dom";
 import InputArea from "./InputArea";
 import { FaPlay } from "react-icons/fa";
+import axios from 'axios';
 
 
 export default function SignUp() {
@@ -13,14 +14,48 @@ export default function SignUp() {
     const [ name, setName] = useState('');
     const [isClient, setIsClient] = useState(false);
     const [isDev, setIsDev] = useState(false);
+    const [check, setCheck] = useState(false);
 
-    function doSignUp(){
+    function doSignUp(event){
+        if(passwordConfirm != password){
+            alert("Senhas diferentes!");
+            setPassword('');
+            setPasswordConfirm('');
+        }
+        else{
+            event.preventDefault();
+            const body = {
+                name: name,
+                email: email,
+                password: password
+            }
+            const request = axios.post("http://localhost:4000/sign-up", body);
+            request.then(loadUser);
+            request.catch(tratarErro);
+    }
+}
 
+    function tratarErro(erro){
+        alert("Dados Incorretos!");
+        setEmail("");
+        setPassword("");
+        setPasswordConfirm('');
+        setName("");
+        setIsClient(false);
+        setIsDev(false);
+    }
+
+    function loadUser(object) {
+        setCheck(true);
     }
 
     function render(){
-
+        if(check === true){
+            return (<Redirect to={"/"} />);
+        }
     }
+        
+
     function renderClient(){
         if(isClient){
             return(
@@ -47,9 +82,6 @@ export default function SignUp() {
             );
         }
             
-    }
-    function switchOption(){
-        
     }
 
     return (
