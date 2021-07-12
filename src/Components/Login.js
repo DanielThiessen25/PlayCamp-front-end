@@ -12,7 +12,6 @@ import UserContext from '../contexts/UserContext';
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [check, setCheck] = useState('');
     const [loading, setLoading] = useState(false);
     const history = useHistory();
     const {setUser} = useContext(UserContext);
@@ -49,10 +48,6 @@ export default function Login() {
         })
     }
 
-    function render(){
-
-    }
-
 
     return (
         <Screen>
@@ -69,7 +64,6 @@ export default function Login() {
                     </button>
                 </form>
                 <Link to="/sign-up" style={{ textDecoration: 'none' }}><LinkText>Perdido por aqui?? Crie já a sua conta!</LinkText></Link>
-                {render()}
             </InputArea>
         </Screen>
     );

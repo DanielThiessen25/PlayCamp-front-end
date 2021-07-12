@@ -6,6 +6,7 @@ import UserContext from '../contexts/UserContext';
 import Games from './Games';
 import Cart from './Cart';
 import CartContext from '../contexts/CartContext';
+import AddGame from './AddGame';
 
 
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
                     <Route path="/sign-up" exact={true} component={SignUp} />
                     <Route path="/games" exact={true} component={Games} />
                     <Route path="/cart" exact={true} component={Cart} />
+                    <Route path="/addgame" exact={true} component={AddGame} />
                 </UserContext.Provider>
                 </CartContext.Provider>
             </Switch>
