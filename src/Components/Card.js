@@ -1,10 +1,14 @@
 import styled from 'styled-components';
 import { IoAddCircleOutline, IoCartOutline, IoRemoveCircleOutline} from "react-icons/io5";
 import { useState, useContext, useEffect } from 'react';
+import CartContext from '../contexts/CartContext';
+import { useHistory } from 'react-router-dom';
 
 export default function Card(props){
     const [isCarted, setIsCarted] = useState(false);
     const [orders, setOrders] = useState(1);
+    const {cartShopping,setCartShopping} = useContext(CartContext);
+    const history = useHistory();
     function clickCart(){
             setIsCarted(!isCarted);
     }
@@ -12,12 +16,18 @@ export default function Card(props){
     function renderCartButton(){
         if(isCarted){
             return(
-            <button onClick={clickCart}><RemoveCart><IoRemoveCircleOutline color="#000000" size="1.2em" /><IoCartOutline color="#000000 " size="1.8em" /></RemoveCart></button>
+            <button onClick={() => {
+                clickCart();
+                removeFromCart();
+            }}><RemoveCart><IoRemoveCircleOutline color="#000000" size="1.2em" /><IoCartOutline color="#000000 " size="1.8em" /></RemoveCart></button>
             );
         }
         else{
             return(
-                <button onClick={clickCart}><AddCart><IoAddCircleOutline color="#FFFFFF" size="1.2em" /><IoCartOutline color="#FFFFFF" size="1.8em" /></AddCart></button>
+                <button onClick={() => {
+                    clickCart();
+                    addToCart();
+                }}><AddCart><IoAddCircleOutline color="#FFFFFF" size="1.2em" /><IoCartOutline color="#FFFFFF" size="1.8em" /></AddCart></button>
             );
         }
     }
@@ -25,6 +35,30 @@ export default function Card(props){
         if(orders > 1){
             setOrders(orders - 1);
         }
+    }
+
+    function addToCart(){
+        const newCart = [...cartShopping].filter(item => {
+            if(item.game.id === props.game.id){
+                return false;
+            }
+            return true;
+        });
+        const newItem = {
+            game: props.game,
+            qtd: orders
+        }
+        setCartShopping([...newCart, newItem]);
+    }
+
+    function removeFromCart(){
+        const newCart = [...cartShopping].filter(item => {
+            if(item.game.id === props.game.id){
+                return false;
+            }
+            return true;
+        });
+        setCartShopping(newCart);
     }
 
     return(
@@ -45,7 +79,10 @@ export default function Card(props){
             <HorizontalLowDiv>
                 <Price>R$ {props.game.price}</Price>
                 <HorizontalDiv>
-                <button><Buy>Comprar</Buy></button>
+                <button onClick={() => {
+                    addToCart();
+                    history.push("/cart")
+                }}><Buy>Comprar</Buy></button>
                 <Qtd>
                     <button onClick={minusQtd}><h2>-</h2></button>
                     <h1>{orders}</h1>
@@ -60,7 +97,7 @@ export default function Card(props){
     );
 }
 
-const Box = styled.div `
+export const Box = styled.div `
 width: 100%;
 height: auto;
 margin-bottom:35px;
@@ -70,7 +107,7 @@ background: whitesmoke;
 box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.5);
 `;
 
-const Title = styled.div`
+export const Title = styled.div`
     width: 100%;
     height: 20px;
     margin-bottom: 10px;
@@ -82,14 +119,14 @@ const Title = styled.div`
     color: black;
 `;
 
-const CenterDiv = styled.div`
+export const CenterDiv = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-top: 15px;
 `;
-const HorizontalLowDiv = styled.div`
+export const HorizontalLowDiv = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -98,14 +135,14 @@ const HorizontalLowDiv = styled.div`
     margin-top: 15px;
 `;
 
-const HorizontalDiv = styled.div`
+export const HorizontalDiv = styled.div`
     display: flex;
     flex-direction: row;
     align-items:center;
 `;
 
 
-const Picture = styled.div`
+export const Picture = styled.div`
     width: 120px;
     height: 120px;
     border-radius:5px;
@@ -119,7 +156,7 @@ const Picture = styled.div`
     }
 `;
 
-const Description = styled.div`
+export const Description = styled.div`
     width: 50%;
     font-family: 'Raleway', sans-serif;
     font-style: normal;
@@ -146,7 +183,7 @@ const Description = styled.div`
 
 `;
 
-const Price = styled.div`
+export const Price = styled.div`
     font-family: 'Raleway', sans-serif;
     font-style: normal;
     font-weight: bold;
@@ -154,7 +191,7 @@ const Price = styled.div`
     color: black;
 `;
 
-const Buy = styled.div`
+export const Buy = styled.div`
     width: 80px;
     height: 30px;
     background: black;
@@ -170,7 +207,7 @@ const Buy = styled.div`
 
 `;
 
-const AddCart = styled.div`
+export const AddCart = styled.div`
     width: 60px;
     height: 30px;
     border-radius:5px;
@@ -180,7 +217,7 @@ const AddCart = styled.div`
     align-items: center;
 `;
 
-const RemoveCart = styled.div`
+export const RemoveCart = styled.div`
     width: 60px;
     height: 30px;
     border-radius:5px;
@@ -190,7 +227,7 @@ const RemoveCart = styled.div`
     align-items: center;
 `;
 
-const Qtd = styled.div`
+export const Qtd = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;

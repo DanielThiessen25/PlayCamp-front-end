@@ -21,7 +21,7 @@ export default function Games() {
                 Authorization: "Bearer " + user.token
             }
         }
-        const request = axios.get("https://back-playcamp.herokuapp.com/games", config);
+        const request = axios.get("http://localhost:4000/games", config);
 
         request.then(resposta => {
             setList(resposta.data);
@@ -41,7 +41,7 @@ export default function Games() {
             }
         }
         const body = {}
-        const url = "https://back-playcamp.herokuapp.com/logout"
+        const url = "http://localhost:4000/logout"
         const requestLogout = axios.post(url,body, config);
         requestLogout.then(response => {
             setUser({});
@@ -75,7 +75,6 @@ export default function Games() {
         {list.map(item => 
             <Card game={item}></Card>
         )}
-                
         </CardsList>
         
     </Screen>
@@ -83,7 +82,7 @@ export default function Games() {
 
 }
 
-const Heading = styled.div`
+export const Heading = styled.div`
 width: 100%;
 height:60px;
 padding: 12px;
@@ -105,7 +104,7 @@ color: #FFFFFF;
 margin-bottom: 23px;
 `;
 
-const Toolbar = styled.div`
+export const Toolbar = styled.div`
 width: 18%;
 height: 100%;
 display: flex;
@@ -114,7 +113,7 @@ align-items: center;
 justify-content: space-between;
 `;
 
-const Title = styled.div`
+export const Title = styled.div`
 width: 100%;
 height: 30px;
 font-family: 'Press Start 2P', cursive;
@@ -126,7 +125,7 @@ color: #FFFFFF;
 margin-bottom: 30px;
 `;
 
-const CardsList = styled.div`
+export const CardsList = styled.div`
 height: 85%;
 width: 100%;
 padding: 15px;
