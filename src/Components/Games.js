@@ -64,7 +64,7 @@ export default function Games() {
 
 }
 
-const Heading = styled.div`
+export const Heading = styled.div`
 width: 100%;
 height:60px;
 padding: 12px;
@@ -86,7 +86,7 @@ color: #FFFFFF;
 margin-bottom: 23px;
 `;
 
-const Toolbar = styled.div`
+export const Toolbar = styled.div`
 width: 18%;
 height: 100%;
 display: flex;
@@ -95,7 +95,7 @@ align-items: center;
 justify-content: space-between;
 `;
 
-const CardsList = styled.div`
+export const CardsList = styled.div`
 height: 85%;
 width: 100%;
 padding: 15px;

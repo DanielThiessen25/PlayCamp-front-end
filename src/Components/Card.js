@@ -43,7 +43,7 @@ export default function Card(props){
             </CenterDiv>
             
             <HorizontalLowDiv>
-                <Price>R$ 49,90</Price>
+                <Price>R$ 49,90 X 2 = R$99,80</Price>
                 <HorizontalDiv>
                 <button><Buy>Comprar</Buy></button>
                 <Qtd>
@@ -60,7 +60,7 @@ export default function Card(props){
     );
 }
 
-const Box = styled.div `
+export const Box = styled.div `
 width: 100%;
 height: auto;
 margin-bottom:35px;
@@ -70,7 +70,7 @@ background: whitesmoke;
 box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.5);
 `;
 
-const Title = styled.div`
+export const Title = styled.div`
     width: 100%;
     height: 20px;
     margin-bottom: 10px;
@@ -82,14 +82,14 @@ const Title = styled.div`
     color: black;
 `;
 
-const CenterDiv = styled.div`
+export const CenterDiv = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-top: 15px;
 `;
-const HorizontalLowDiv = styled.div`
+export const HorizontalLowDiv = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -98,14 +98,14 @@ const HorizontalLowDiv = styled.div`
     margin-top: 15px;
 `;
 
-const HorizontalDiv = styled.div`
+export const HorizontalDiv = styled.div`
     display: flex;
     flex-direction: row;
     align-items:center;
 `;
 
 
-const Picture = styled.div`
+export const Picture = styled.div`
     width: 120px;
     height: 120px;
     border-radius:5px;
@@ -113,7 +113,7 @@ const Picture = styled.div`
     margin-right: 10px;
 `;
 
-const Description = styled.div`
+export const Description = styled.div`
     width: 50%;
     font-family: 'Raleway', sans-serif;
     font-style: normal;
@@ -140,7 +140,7 @@ const Description = styled.div`
 
 `;
 
-const Price = styled.div`
+export const Price = styled.div`
     font-family: 'Raleway', sans-serif;
     font-style: normal;
     font-weight: bold;
@@ -148,7 +148,7 @@ const Price = styled.div`
     color: black;
 `;
 
-const Buy = styled.div`
+export const Buy = styled.div`
     width: 80px;
     height: 30px;
     background: black;
@@ -164,7 +164,7 @@ const Buy = styled.div`
 
 `;
 
-const AddCart = styled.div`
+export const AddCart = styled.div`
     width: 60px;
     height: 30px;
     border-radius:5px;
@@ -174,7 +174,7 @@ const AddCart = styled.div`
     align-items: center;
 `;
 
-const RemoveCart = styled.div`
+export const RemoveCart = styled.div`
     width: 60px;
     height: 30px;
     border-radius:5px;
@@ -184,7 +184,7 @@ const RemoveCart = styled.div`
     align-items: center;
 `;
 
-const Qtd = styled.div`
+export const Qtd = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
