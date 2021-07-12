@@ -21,7 +21,7 @@ export default function Games() {
                 Authorization: "Bearer " + user.token
             }
         }
-        const request = axios.get("https://back-playcamp.herokuapp.com/games", config);
+        const request = axios.get("http://localhost:4000/games", config);
 
         request.then(resposta => {
             setList(resposta.data);
@@ -41,7 +41,7 @@ export default function Games() {
             }
         }
         const body = {}
-        const url = "https://back-playcamp.herokuapp.com/logout"
+        const url = "http://localhost:4000/logout"
         const requestLogout = axios.post(url,body, config);
         requestLogout.then(response => {
             setUser({});

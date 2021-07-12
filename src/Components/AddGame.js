@@ -28,7 +28,7 @@ export default function AddGame() {
             }
         }
         const body = {}
-        const url = "https://back-playcamp.herokuapp.com/logout"
+        const url = "http://localhost:4000/logout"
         const requestLogout = axios.post(url, body, config);
         requestLogout.then(response => {
             setUser({});
@@ -58,7 +58,7 @@ export default function AddGame() {
             price:price,
             description:description
         }
-        const url = "https://back-playcamp.herokuapp.com/addgame";
+        const url = "http://localhost:4000/addgame";
         const requestCreation = axios.post(url, body, config);
         requestCreation.then((response)=>{
             setName('');
