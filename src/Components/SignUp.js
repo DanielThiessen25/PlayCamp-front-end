@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useState, useContext} from 'react';
 import Screen from "./Screen";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, Redirect } from "react-router-dom";
 import InputArea from "./InputArea";
 import { FaPlay } from "react-icons/fa";
 import Loader from 'react-loader-spinner';
@@ -56,9 +56,8 @@ export default function SignUp() {
         })
     }
 
-    function render(){
+        
 
-    }
     function renderClient(){
         if(isClient){
             return(
@@ -86,9 +85,6 @@ export default function SignUp() {
         }
             
     }
-    function switchOption(){
-        
-    }
 
     return (
         <Screen>
@@ -112,7 +108,6 @@ export default function SignUp() {
                 </button>
                 </form>
                 <Link to="/" style={{ textDecoration: 'none' }}><LinkText>Mais perdido ainda?? Tente um login mágico!</LinkText></Link>
-                {render()}
             </InputArea>
         </Screen>
     );
