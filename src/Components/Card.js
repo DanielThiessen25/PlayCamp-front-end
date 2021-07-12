@@ -1,10 +1,14 @@
 import styled from 'styled-components';
 import { IoAddCircleOutline, IoCartOutline, IoRemoveCircleOutline} from "react-icons/io5";
 import { useState, useContext, useEffect } from 'react';
+import CartContext from '../contexts/CartContext';
+import { useHistory } from 'react-router-dom';
 
 export default function Card(props){
     const [isCarted, setIsCarted] = useState(false);
     const [orders, setOrders] = useState(1);
+    const {cartShopping,setCartShopping} = useContext(CartContext);
+    const history = useHistory();
     function clickCart(){
             setIsCarted(!isCarted);
     }
@@ -12,12 +16,18 @@ export default function Card(props){
     function renderCartButton(){
         if(isCarted){
             return(
-            <button onClick={clickCart}><RemoveCart><IoRemoveCircleOutline color="#000000" size="1.2em" /><IoCartOutline color="#000000 " size="1.8em" /></RemoveCart></button>
+            <button onClick={() => {
+                clickCart();
+                removeFromCart();
+            }}><RemoveCart><IoRemoveCircleOutline color="#000000" size="1.2em" /><IoCartOutline color="#000000 " size="1.8em" /></RemoveCart></button>
             );
         }
         else{
             return(
-                <button onClick={clickCart}><AddCart><IoAddCircleOutline color="#FFFFFF" size="1.2em" /><IoCartOutline color="#FFFFFF" size="1.8em" /></AddCart></button>
+                <button onClick={() => {
+                    clickCart();
+                    addToCart();
+                }}><AddCart><IoAddCircleOutline color="#FFFFFF" size="1.2em" /><IoCartOutline color="#FFFFFF" size="1.8em" /></AddCart></button>
             );
         }
     }
@@ -25,6 +35,30 @@ export default function Card(props){
         if(orders > 1){
             setOrders(orders - 1);
         }
+    }
+
+    function addToCart(){
+        const newCart = [...cartShopping].filter(item => {
+            if(item.game.id === props.game.id){
+                return false;
+            }
+            return true;
+        });
+        const newItem = {
+            game: props.game,
+            qtd: orders
+        }
+        setCartShopping([...newCart, newItem]);
+    }
+
+    function removeFromCart(){
+        const newCart = [...cartShopping].filter(item => {
+            if(item.game.id === props.game.id){
+                return false;
+            }
+            return true;
+        });
+        setCartShopping(newCart);
     }
 
     return(
@@ -45,7 +79,10 @@ export default function Card(props){
             <HorizontalLowDiv>
                 <Price>R$ {props.game.price}</Price>
                 <HorizontalDiv>
-                <button><Buy>Comprar</Buy></button>
+                <button onClick={() => {
+                    addToCart();
+                    history.push("/cart")
+                }}><Buy>Comprar</Buy></button>
                 <Qtd>
                     <button onClick={minusQtd}><h2>-</h2></button>
                     <h1>{orders}</h1>

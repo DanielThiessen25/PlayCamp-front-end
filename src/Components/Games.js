@@ -75,7 +75,6 @@ export default function Games() {
         {list.map(item => 
             <Card game={item}></Card>
         )}
-                
         </CardsList>
         
     </Screen>
