@@ -9,12 +9,14 @@ import CardInCart from "./CardInCart";
 import CartContext from "../contexts/CartContext";
 import { Box, Title } from "./Card";
 import styled from "styled-components";
+import Loader from 'react-loader-spinner';
 
-export default function Games() {
+export default function Cart() {
     const history = useHistory();
     const {user, setUser} = useContext(UserContext);
     const {cartShopping, setCartShopping} = useContext(CartContext);
     const [payment, setPayment] = useState("cash");
+    const [loading, setLoading] = useState(false);
     function doLogout(){
         const config = {
             headers:{
@@ -41,6 +43,39 @@ export default function Games() {
         });
         return String(parseFloat(total).toFixed(2)).replace(".", ",");
     }
+
+    function doSale(){
+        setLoading(true);
+        const games = [...cartShopping].map(game => {
+            const obj = {
+                gameId: game.game.id,
+                qtd: game.qtd
+            }
+            return obj;
+        });
+        const body = {
+            payment: payment,
+            games: games
+        }
+        const config = {
+            headers: {
+                "authorization": `Bearer ${user.token}`
+            }
+        }
+        const url = "http://localhost:4000/endsale"
+        const saleRequest = axios.post(url, body, config);
+        saleRequest.then(response =>{
+            alert("Compra efetuada com sucesso!");
+            setLoading(false);
+            setCartShopping([]);
+            history.push("/games");
+        });
+        saleRequest.catch(err => {
+            alert("Não conseguimos efetuar sua compra, tente novamente!");
+            setLoading(false);
+        })
+    }
+
     return(
         <Screen>
             <Heading>
@@ -60,7 +95,11 @@ export default function Games() {
                         <option value="cash">Em dinheiro</option>
                         <option value="credit">Cartão de Crédito</option>
                     </Select>
-                    <EndSale>Finalizar Compra</EndSale>
+                    <EndSale onClick={doSale}disabled={loading}>
+                        {loading ? 
+                            <Loader type="ThreeDots" color="#FFFFFF" height={13} width={80} />
+                            : "Finalizar Compra"}
+                    </EndSale>
                     </>
                     : <Title>Seu carrinho está vazio</Title>}
                 </Box>
