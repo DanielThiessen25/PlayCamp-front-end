@@ -29,21 +29,21 @@ export default function Card(props){
 
     return(
         <Box>
-            <Title>JOGO 1</Title>
+            <Title>{props.game.name}</Title>
             <CenterDiv>
-            <Picture></Picture>
+            <Picture><img src={props.game.img} /></Picture>
             <Description>
             <h2>Descrição</h2>
             <h3>
-            bla bla bla bla bla bla bla bla bla bla bla
+            {props.game.description}
             </h3>
             <h2>Desenvolvedor</h2>
-            <h3>UsuárioX</h3>
+            <h3>{props.game.devName}</h3>
             </Description>
             </CenterDiv>
             
             <HorizontalLowDiv>
-                <Price>R$ 49,90</Price>
+                <Price>R$ {props.game.price}</Price>
                 <HorizontalDiv>
                 <button><Buy>Comprar</Buy></button>
                 <Qtd>
@@ -111,6 +111,12 @@ const Picture = styled.div`
     border-radius:5px;
     background: blueviolet;
     margin-right: 10px;
+
+    img{
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+    }
 `;
 
 const Description = styled.div`
@@ -134,7 +140,7 @@ const Description = styled.div`
     h3{
         font-size: 12px;
         font-weight: normal;
-        color: darkgray;
+        color: #3C3C3C;
         margin-bottom: 10px;
     }
 

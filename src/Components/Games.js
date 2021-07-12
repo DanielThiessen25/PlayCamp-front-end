@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link, Redirect, useHistory } from "react-router-dom";
 import { IoExitOutline, IoCartOutline} from "react-icons/io5";
 import Card from "./Card";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import UserContext from "../contexts/UserContext";
 import axios from "axios";
 
@@ -11,14 +11,11 @@ export default function Games() {
     const history = useHistory();
     const [list, setList] = useState([]);
     const {user, setUser} = useContext(UserContext);
-    if(!user.token){
-        history.push("/");
-        return "";
-    }
-    const isDev = user.userType === "developer" ? true : false;
-    console.log(isDev);
-
     useEffect(() => {
+        if(!user.token){
+            history.push("/");
+            return "";
+        }
         const config = {
             headers: {
                 Authorization: "Bearer " + user.token
@@ -28,8 +25,14 @@ export default function Games() {
 
         request.then(resposta => {
             setList(resposta.data);
+            console.log(resposta.data);
         });
     }, []);
+    
+    const isDev = user.userType === "developer" ? true : false;
+    console.log(isDev);
+
+    
 
     function doLogout(){
         const config = {
@@ -62,15 +65,17 @@ export default function Games() {
         </Heading>
         {isDev ?
         <DevAddGame>
-            <Link to="/addgame">Dev, Adicionar Jogo</Link>
+            <Link to="/addgame">Adicionar Jogo</Link>
         </DevAddGame> : ''}
 
+        
+
         <CardsList isDev={isDev}>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
+        <Title isDev={isDev}>Jogos</Title>
+        {list.map(item => 
+            <Card game={item}></Card>
+        )}
+                
         </CardsList>
         
     </Screen>
@@ -109,12 +114,24 @@ align-items: center;
 justify-content: space-between;
 `;
 
+const Title = styled.div`
+width: 100%;
+height: 30px;
+font-family: 'Press Start 2P', cursive;
+font-style: normal;
+font-weight: normal;
+font-size:  30px;
+line-height: 30px;
+color: #FFFFFF;
+margin-bottom: 30px;
+`;
+
 const CardsList = styled.div`
 height: 85%;
 width: 100%;
 padding: 15px;
 position: fixed;
-top: ${props => props.isDev ? '134px':'65px'};
+top: ${props => props.isDev ? '150px':'65px'};
 overflow: hidden;
 overflow-y: scroll;
 display: flex;
@@ -125,7 +142,7 @@ align-items: center;
 const DevAddGame = styled.div`
     display: flex;
     width: 100%;
-    justify-content: right;
+    justify-content: center;
     position: fixed;
     top: 85px;
     padding-right: 15px;
@@ -142,6 +159,7 @@ const DevAddGame = styled.div`
         padding-left :8px;
         padding-right: 8px;
         margin-bottom: 5px;
+        box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
     }
 `;
 
