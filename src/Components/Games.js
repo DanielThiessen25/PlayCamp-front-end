@@ -9,13 +9,27 @@ import axios from "axios";
 
 export default function Games() {
     const history = useHistory();
+    const [list, setList] = useState([]);
     const {user, setUser} = useContext(UserContext);
     if(!user.token){
         history.push("/");
         return "";
     }
     const isDev = user.userType === "developer" ? true : false;
-    console.log(isDev)
+    console.log(isDev);
+
+    useEffect(() => {
+        const config = {
+            headers: {
+                Authorization: "Bearer " + user.token
+            }
+        }
+        const request = axios.get("http://localhost:4000/games", config);
+
+        request.then(resposta => {
+            setList(resposta.data);
+        });
+    }, []);
 
     function doLogout(){
         const config = {

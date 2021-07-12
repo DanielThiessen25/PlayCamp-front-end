@@ -28,7 +28,7 @@ const InputArea = styled.div`
     }
     button{
         width: 100%;
-        height: 46px;
+        height: 60px;
         background: #000000;
         border-radius: 5px;
         border: none;
@@ -41,6 +41,20 @@ const InputArea = styled.div`
         margin-bottom: 36px;
         cursor: pointer;
         
+    }
+    textarea{
+        width: 100%;
+        height: 120px;
+        border: none;
+        padding: 18px 0 18px 15px;
+        font-family: 'Raleway', sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 20px;
+        line-height: 23px;
+        color: #000000;
+        margin-bottom: 15px;
+        border-radius: 5px;
     }
 `;
 
