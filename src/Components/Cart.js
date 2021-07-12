@@ -24,7 +24,7 @@ export default function Cart() {
             }
         }
         const body = {}
-        const url = "http://localhost:4000/logout"
+        const url = "https://playcamp-back.herokuapp.com/logout"
         const requestLogout = axios.post(url,body, config);
         requestLogout.then(response => {
             setUser({});
@@ -62,7 +62,7 @@ export default function Cart() {
                 "authorization": `Bearer ${user.token}`
             }
         }
-        const url = "http://localhost:4000/endsale"
+        const url = "https://playcamp-back.herokuapp.com/endsale"
         const saleRequest = axios.post(url, body, config);
         saleRequest.then(response =>{
             alert("Compra efetuada com sucesso!");

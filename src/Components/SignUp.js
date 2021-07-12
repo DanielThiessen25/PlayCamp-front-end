@@ -35,7 +35,7 @@ export default function SignUp() {
             password: String(password).trim(),
             userType: isDev ? "developer" : "normal"
         }
-        const url = "ttps://back-playcamp.herokuapp.com/signup";
+        const url = "https://playcamp-back.herokuapp.com/signup";
         const requestSignUp = axios.post(url, body);
         requestSignUp.then(response => {
             setEmail("");
