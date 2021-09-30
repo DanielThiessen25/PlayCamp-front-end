@@ -34,5 +34,5 @@ npm i
 ```bash
 npm run start
 ```
-4. Check out the instructions to connect a local server and creating the database for persistance of data in your machine [here](https://github.com/DanielThiessen25/mywallet-back-end)
+4. Check out the instructions to connect a local server and creating the database for persistance of data in your machine [here](https://github.com/DanielThiessen25/PlayCamp-back-end)
 5. Have a nice buying moment! :)
